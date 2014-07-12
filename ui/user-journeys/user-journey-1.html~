@@ -12,13 +12,6 @@
     <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="../bootstrap/css/bootstrap-accessibility.css" rel="stylesheet">
     
-    
-    <!-- Javascript geolocation code -->
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <!-- Google Maps API must be loaded first -->
-    <script src="../bootstrap/js/geolocation.js"></script>
-   
-    
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -44,7 +37,6 @@
 
     <div class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-      
         <div class="navbar-header">
           <a href="../" class="navbar-brand">Accessible Melbourne</a>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
@@ -53,7 +45,6 @@
             <span class="icon-bar"></span>
           </button>
         </div>
-        
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
         
@@ -72,23 +63,96 @@
           </ul>
 
         </div>
-        
       </div>
     </div>
-    
-    
 
     <div class="container">
 
-      <h1>Getting user's location</h1>
-     
+      <h1>Showing accessibility details for {{selectedLocation}}</h1>
       
-  
-        <article>
-        <p>Loading your location... </p>
-        </article>
+      
+      
+      
+        <div class="row">
+          <div class="col-lg-12">
+            <h2>Nearby locations</h2>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="bs-component">
+            
+              <ul class="list-group">
+                <li class="list-group-item">
+                  <span class="badge">99</span>
+                  lorem ipsum location details here
+                </li>
+                <li class="list-group-item">
+                  <span class="badge">98</span>
+                  blah blah blah this is another location
+                </li>
+                <li class="list-group-item">
+                  <span class="badge">97</span>
+                  blah blah blah this is another location
+                </li>
+              </ul>
+            </div>
+            
+            
+                      
+                  <!-- Warning panel if GPS location Not shared-->
+        <div class="panel panel-warning">
+                <div class="panel-heading">
+                  <h3 class="panel-title">Location not detected</h3>
+                </div>
+                <div class="panel-body">
+                  Woops! We weren't able to find your location :(
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+          
+                  <div class="row">
+          <div class="col-lg-4">
+          <h3>Search for a location: </h3>
+          <form>
+                <div class="form-group">
+                  <label for="search"class="control-label">Search</label>
+                  <div class="input-group">
+                    
+                    <input type="text" class="form-control" id="search">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Search</button>
+                    </span>
+                  </div>
+                </div>
+              </form>
+              </div>
+              </div>
+          
 
-         
+      
+          
+          
+          
+          </div>
+          
+
+        
+               
+        
+
+      
+      
+      
+      
+      
+      
+      
+      
 
     </div> <!-- /container -->
     
@@ -100,7 +164,7 @@
         <div class="navbar-header">
           <a href="../" class="navbar-brand">Footer links in here</a>
         </div>
-        <div class="navbar-collapse collapse" id="navbar-footer">
+        <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
         
             <li>
@@ -116,11 +180,15 @@
             <li><a href="#">Right Link #99</a></li>
             <li><a href="#">Right Link #98</a></li>
           </ul>
-          </div>
+
         </div>
       </div>
-    
+      	</div>
      </footer>
+    
+    
+    
+    
     
     
     
@@ -140,10 +208,8 @@
     <script src="../bootstrap/js/bootstrap-popover.js"></script>
     <script src="../bootstrap/js/bootstrap-button.js"></script>
     <script src="../bootstrap/js/bootstrap-collapse.js"></script>
-    <script src="../bootstrap/js/bootstrap-carousel.js"></script>
+    <script src="../bootstrap/js/bootstrap-carousel.js"></scrip	t>
     <script src="../bootstrap/js/bootstrap-typeahead.js"></script>
-    
-    
 
   </body>
 </html>

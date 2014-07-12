@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>navigator.geolocation demo</title>
+	
+	<!-- load global css files -->
+	<link rel="stylesheet" href="vendor/typography.css" />
+	<link rel="stylesheet" href="vendor/js-html5.css" />
+	
+	<!-- add google analytics code -->	
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-6435088-13");
+	pageTracker._trackPageview();
+	} catch(err) {}</script>
+		
+	
+
+</head>
+<body>
+	<header>This is a demo of the HTML5 navigator.geolocation API in action</header>
+	
+	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <article>
+      <p>Finding your location: <span id="status">checking...</span></p>
+    </article>
+    
+	<hr/>
+	
+	<footer>
+		<p>This demo works in the following browsers:</p>
+		<ul>
+			<li>Firefox 3.5+ </li>
+			<li>Chrome 5+</li>
+			<li>Safari 5+ </li>
+			<li>Opera 10.60+ </li>
+		</ul>
+		
+		<p><a href="http://www.w3.org/html/logo/">
+<img src="http://www.w3.org/html/logo/badge/html5-badge-h-performance.png" width="133" height="64" alt="HTML5 Powered with Performance &amp; Integration" title="HTML5 Powered with Performance &amp; Integration">
+</a></p>
+<p>
+		<a href="https://github.com/sydlawrence/HTML5-geolocation">This code is available on github</a>
+	</p>	
+		<p>This demo was written by <a href="http://twitter.com/sydlawrence">@sydlawrence</a> from <a href="http://www.marmaladeontoast.co.uk">Marmalade on Toast</a>, for <a href="http://js-html5.com">js-html5.com</a></p>
+	</footer>
+	
+	<!-- load demo js -->
+	<script src="geolocation.js"></script>
+
+</body>
+</html>
