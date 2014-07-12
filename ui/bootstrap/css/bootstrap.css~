@@ -63,6 +63,7 @@ dfn {
 }
 h1 {
   font-size: 200%;
+  margin: 0.67em 0;
 }
 mark {
   background: #ff0;
@@ -1093,6 +1094,7 @@ h6,
   font-size: 13px;
 }
 p {
+  margin: 0 0 10.5px;
 }
 .lead {
   margin-bottom: 21px;
