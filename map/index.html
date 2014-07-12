@@ -51,12 +51,19 @@
       $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>1', function(data) {
         var row;
         for (row in data) {
+          var metadata = "";
+            if (data[row].building_name)
+              {metadata += "Building name: " + data[row].building_name + "<br>"; }
+            metadata += "<br>" + "Street address: " + data[row].street_address + "</br>";
+            metadata += "<br>" + "Accessibility type: " + data[row].accessibility_type + "</br>";
+            metadata += "<br>" + "Accessibility rating: " + data[row].accessibility_rating + "</br>";
+
           L.marker(
           [
           data[row].latitude,
           data[row].longitude
           ]).addTo(map).bindPopup(
-          "<b>" + data[row].street_address + "</b>").openPopup();
+          "<b>" + metadata + "</b>").openPopup();
         }});
       
       $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data) {
