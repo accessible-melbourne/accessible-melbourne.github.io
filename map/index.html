@@ -33,10 +33,10 @@
         alert(e.message);
       }
 
-      map.on('locationfound', onLocationFound); 
+      map.on('locationfound', onLocationFound);
       map.on('locationerror', onLocationError);
 
-      map.locate({setView: true, maxZoom: 16});      
+      map.locate({setView: true, maxZoom: 16});
 
       function onMapClick(e) {
         popup
@@ -52,7 +52,7 @@
           var LeafIcon = L.Icon.extend({
             options: {
                        iconAnchor:   [0, 0],
-              popupAnchor:  [0, 0]
+                       popupAnchor:  [0, 0]
                      }
           });
 
@@ -67,18 +67,18 @@
           for (row in data) {
             var metadata = "";
             if (data[row].building_name)
-      {metadata += "Building name: " + data[row].building_name + "<br>"; }
-      metadata += "<br>" + "Street address: " + data[row].street_address + "</br>";
-      metadata += "<br>" + "Accessibility type: " + data[row].accessibility_type + "</br>";
-      metadata += "<br>" + "Accessibility rating: " + data[row].accessibility_rating + "</br>";
+            { metadata += "Building name: " + data[row].building_name + "<br>"; }
+            metadata += "<br>" + "Street address: " + data[row].street_address + "</br>";
+            metadata += "<br>" + "Accessibility type: " + data[row].accessibility_type + "</br>";
+            metadata += "<br>" + "Accessibility rating: " + data[row].accessibility_rating + "</br>";
 
-      if (data[row].accessibility_rating == 3)
-        icon=greenIcon;
-      else if (data[row].accessibility_rating == 2)
-        icon=yellowIcon;
-      else if (data[row].accessibility_rating == 1)
-        icon=redIcon;
-        L.marker ([data[row].latitude, data[row].longitude], {icon: icon}).addTo(map).bindPopup("<b>" + metadata + "</b>").openPopup();
+            if (data[row].accessibility_rating == 3)
+              icon=greenIcon;
+            else if (data[row].accessibility_rating == 2)
+              icon=yellowIcon;
+            else if (data[row].accessibility_rating == 1)
+              icon=redIcon;
+            L.marker ([data[row].latitude, data[row].longitude], {icon: icon}).addTo(map).bindPopup("<b>" + metadata + "</b>").openPopup();
         }});
 
       $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data) {
