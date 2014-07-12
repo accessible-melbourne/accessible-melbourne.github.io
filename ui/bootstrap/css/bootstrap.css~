@@ -63,6 +63,7 @@ dfn {
 }
 h1 {
   font-size: 200%;
+  margin: 0.67em 0;
 }
 mark {
   background: #ff0;
@@ -1093,6 +1094,7 @@ h6,
   font-size: 13px;
 }
 p {
+  margin: 0 0 10.5px;
 }
 .lead {
   margin-bottom: 21px;
@@ -2299,7 +2301,7 @@ legend {
   border-bottom: 1px solid transparent;
 }
 label {
-  display: inline;
+  display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: bold;
@@ -2312,7 +2314,8 @@ input[type="search"] {
 input[type="radio"],
 input[type="checkbox"] {
   margin: 4px 0 0;
-  float: left;
+  margin-top: 1px \9;
+  line-height: normal;
 }
 input[type="file"] {
   display: block;
@@ -4428,12 +4431,11 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  text-align: right;
+  color: #ffffff;
+  text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25em;
-  float: left;
-  clear: right;
 }
 a.label:hover,
 a.label:focus {

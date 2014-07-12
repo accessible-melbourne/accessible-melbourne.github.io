@@ -12,6 +12,13 @@
     <link href="../bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
     <link href="../bootstrap/css/bootstrap-accessibility.css" rel="stylesheet">
     
+    
+    <!-- Javascript geolocation code -->
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <!-- Google Maps API must be loaded first -->
+    <script src="../bootstrap/js/geolocation.js"></script>
+   
+    
     <style>
       body {
         padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
@@ -73,130 +80,13 @@
 
     <div class="container">
 
-      <h1>Welcome to Accessible Melbourne</h1>
+      <h1>Getting user's location</h1>
      
       
   
-        <div class="row">
-          <div class="col-lg-5">
-            <h2>Nearby locations</h2>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-lg-5">
-            <div class="bs-component">
-            
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <span class="badge">99</span>
-                  lorem ipsum location details here
-                </li>
-                <li class="list-group-item">
-                  <span class="badge">98</span>
-                  blah blah blah this is another location
-                </li>
-                <li class="list-group-item">
-                  <span class="badge">97</span>
-                  blah blah blah this is another location
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
- 
-            
-            
-            
-        <div class="row">
-          <div class="col-lg-5">
-            
-               <form class="form-horizontal">
-               
-                <fieldset>
-                  <legend>I'm interested in info about:</legend>
-                  
-                   <div class="form-group">
-    
-                      <div class="checkbox">
-                        <label for="visualImpairment">
-                          <input type="checkbox" id="visualImpairment" value="visualImpairment"> Visual assistance 
-                          </label>
-                      </div>
-
-                      <div class="checkbox">
-                        <label for="hearingImpairment">
-                          <input type="checkbox" id="hearingImpairment" value="hearingImpairment">  Hearing assistance
-                          </label>
-                      </div>
-                      
-                      <div class="checkbox">
-                        <label for="mobilityImpairment">
-                          <input type="checkbox" id="mobilityImpairment" value="mobilityImpairment">  Mobility assistance
-                          </label>
-                      </div>
-                      
-                      <div class="checkbox">
-                        <label for="cognitiveImpairment">
-                          <input type="checkbox" id="cognitiveImpairment" value="cognitiveImpairment"> Cognitive assistance 
-                          </label>
-                      </div>
-                      
-                  </div>
-            
-                </fieldset>
-              </form>
-                  
-            </div>
-           </div>
-
-                  
-                  
-            
-            
-                      
-                  <!-- Warning panel if GPS location Not shared-->
-           <div class="row">
-            <div class="col-lg-5">
-              <div class="panel panel-warning">
-              
-                <div class="panel-heading">
-                  <h3 class="panel-title">Location not detected</h3>
-                </div>
-                
-                <div class="panel-body">
-                  Woops! We weren't able to find your location :(
-                </div>
-                
-              </div>
-            </div>
-          </div>
-
-            
-            
-
-          
-          <div class="row">
-            <div class="col-lg-5">
-          
-               <h3>Search for a location: </h3>
-               <form>
-               
-                <div class="form-group">
-                  <label for="search" class="control-label">Search</label>
-                  <div class="input-group">
-                    
-                    <input type="text" class="form-control" id="search">
-                    <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">Search</button>
-                    </span>
-                  </div>
-                 </div>
-                 </form>
-                 
-               
-            </div>
-           </div>
+        <article>
+        <p>Loading your location... </p>
+        </article>
 
          
 
@@ -235,10 +125,6 @@
     
     
     
-    
-    
-    
-    
 
     <!-- Le javascript
     ================================================== -->
@@ -256,6 +142,8 @@
     <script src="../bootstrap/js/bootstrap-collapse.js"></script>
     <script src="../bootstrap/js/bootstrap-carousel.js"></script>
     <script src="../bootstrap/js/bootstrap-typeahead.js"></script>
+    
+    
 
   </body>
 </html>
