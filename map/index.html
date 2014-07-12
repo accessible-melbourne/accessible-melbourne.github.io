@@ -5,17 +5,17 @@
     <meta charset="utf-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  </head>
-  <body>
-    <div id="map" style="width: 800px; height: 600px"></div>
-
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="local.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+
     <script>
 
-      var map = L.map('map').setView([-37.814, 144.962], 15);
+      var map = L.map('map');
 
       L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
           maxZoom: 18,
@@ -25,6 +25,19 @@
           id: 'examples.map-i86knfo3'
           }).addTo(map);
       var popup = L.popup();
+      function onLocationFound(e) {
+        var radius = e.accuracy / 2;
+        L.marker(e.latlng).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.circle(e.latlng, radius).addTo(map);
+      }
+      function onLocationError(e) {
+                  alert(e.message);
+      }
+          
+      map.on('locationfound', onLocationFound); 
+      map.on('locationerror', onLocationError);
+      
+      map.locate({setView: true, maxZoom: 16});      
 
       function onMapClick(e) {
         popup
@@ -35,8 +48,7 @@
 
       map.on('click', onMapClick);
 
-      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating=1+AND+suburb=%27KENSINGTON%27', function(data) {
-
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>1', function(data) {
         var row;
         for (row in data) {
           L.marker(
@@ -46,8 +58,17 @@
           ]).addTo(map).bindPopup(
           "<b>" + data[row].street_address + "</b>").openPopup();
         }});
-
-
+      
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data) {
+        var row;
+        for (row in data) {
+          L.marker(
+          [
+          data[row].geom.latitude,
+          data[row].geom.longitude
+          ]).addTo(map).bindPopup(
+          "<b>" + data[row].featurenam + "</b>").openPopup();
+        }});
 
     </script>
   </body>

@@ -3,9 +3,9 @@
   <head>
     <title>Leaflet Quick Start Guide Example</title>
     <meta charset="utf-8" />
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
 	<style>
 		body {
@@ -59,15 +59,28 @@
 
       map.on('click', onMapClick);
 
-      var row;
-      for (row in accessibility_table) {
-        L.marker(
-        [
-          accessibility_table[row].latitude,
-          accessibility_table[row].longitude
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>1', function(data) {
+        var row;
+        for (row in data) {
+          L.marker(
+          [
+          data[row].latitude,
+          data[row].longitude
           ]).addTo(map).bindPopup(
-          "<b>" + accessibility_table[row].street_address + "</b>").openPopup();
-      }
+          "<b>" + data[row].street_address + "</b>").openPopup();
+        }});
+      
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data) {
+        var row;
+        for (row in data) {
+          L.marker(
+          [
+          data[row].geom.latitude,
+          data[row].geom.longitude
+          ]).addTo(map).bindPopup(
+          "<b>" + data[row].featurenam + "</b>").openPopup();
+        }});
+      var row;
     </script>
   </body>
 </html>
