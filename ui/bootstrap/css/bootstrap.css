@@ -2312,8 +2312,7 @@ input[type="search"] {
 input[type="radio"],
 input[type="checkbox"] {
   margin: 4px 0 0;
-  margin-top: 1px \9;
-  line-height: normal;
+  float: left;
 }
 input[type="file"] {
   display: block;
@@ -4433,8 +4432,8 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25em;
-  color: purple;
-  font-size: 400%;
+  float: left;
+  clear: right;
 }
 a.label:hover,
 a.label:focus {
