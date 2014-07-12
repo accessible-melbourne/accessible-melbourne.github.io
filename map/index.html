@@ -12,6 +12,7 @@
     <div id="map" style="width: 800px; height: 600px"></div>
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="Building_Accessibility.json"></script>
     <script>
 
       var map = L.map('map').setView([-37.814, 144.962], 15);
@@ -24,7 +25,6 @@
           id: 'examples.map-i86knfo3'
           }).addTo(map);
 
-      L.marker([-37.814, 144.962]).addTo(map).bindPopup("<b>Hello world!</b><br />I am a popup.<br/><a href='http://data.melbourne.vic.gov.au'>Melbourne data</a>").openPopup();
 
       /*
         L.circle([51.508, -0.11], 500, {
@@ -50,6 +50,15 @@
       }
 
       map.on('click', onMapClick);
+
+      var row;
+      for (row in accessibility_table.data) {
+        addr=accessibility_table.data[row][9];
+        lat=accessibility_table.data[row][18];
+        lon=accessibility_table.data[row][19];
+
+        L.marker([lat, lon]).addTo(map).bindPopup("<b>" + addr + "</b>").openPopup();
+      }
 
     </script>
   </body>
