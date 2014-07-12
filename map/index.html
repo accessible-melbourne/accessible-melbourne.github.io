@@ -12,8 +12,7 @@
     <div id="map" style="width: 800px; height: 600px"></div>
 
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src="x.json"></script>
-    <!--script src="http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating=1+AND+suburb=%27KENSINGTON%27"></script-->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script>
 
       var map = L.map('map').setView([-37.814, 144.962], 15);
@@ -36,15 +35,19 @@
 
       map.on('click', onMapClick);
 
-      var row;
-      for (row in accessibility_table) {
-        L.marker(
-        [
-          accessibility_table[row].latitude,
-          accessibility_table[row].longitude
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating=1+AND+suburb=%27KENSINGTON%27', function(data) {
+
+        var row;
+        for (row in data) {
+          L.marker(
+          [
+          data[row].latitude,
+          data[row].longitude
           ]).addTo(map).bindPopup(
-          "<b>" + accessibility_table[row].street_address + "</b>").openPopup();
-      }
+          "<b>" + data[row].street_address + "</b>").openPopup();
+        }});
+
+
 
     </script>
   </body>
