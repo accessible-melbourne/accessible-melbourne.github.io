@@ -35,27 +35,42 @@
 
       map.on('click', onMapClick);
 
-      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating=1+AND+suburb=%27KENSINGTON%27', function(data) {
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating=2 +AND+suburb=%27KENSINGTON%27', function(data) {
+
+        var LeafIcon = L.Icon.extend({
+            options: {
+              iconAnchor:   [0, 0],
+              popupAnchor:  [0, 0]
+            }
+          });
+
+        var greenIcon = new LeafIcon({iconUrl: 'img/marker-icon-green.png'}),
+            redIcon = new LeafIcon({iconUrl: 'img/marker-icon-red.png'}),
+            yellowIcon = new LeafIcon({iconUrl: 'img/marker-icon-yellow.png'});
+
+        var icon;
+
 
         var row;
         for (row in data) {
           var metadata = "";
             if (data[row].building_name)
               {metadata += "Building name: " + data[row].building_name + "<br>"; }
-            metadata += "<br>" + "Street address: " + data[row].street_address + "</br>";
-            metadata += "<br>" + "Accessibility type: " + data[row].accessibility_type + "</br>";
-            metadata += "<br>" + "Accessibility rating: " + data[row].accessibility_rating + "</br>";
+              metadata += "<br>" + "Street address: " + data[row].street_address + "</br>";
+              metadata += "<br>" + "Accessibility type: " + data[row].accessibility_type + "</br>";
+              metadata += "<br>" + "Accessibility rating: " + data[row].accessibility_rating + "</br>";
 
-          L.marker(
-          [
-          data[row].latitude,
-          data[row].longitude
-          ]).addTo(map).bindPopup(
-          "<b>" + metadata + "</b>").openPopup();
-        }});
-
-
-
+          //document.write(data[row].accessibility_rating + "<br/>")
+          /*if (data[row].accessibility_rating == 3)
+            icon=greenIcon;
+          else if (data[row].accessibility_rating == 2)
+            icon=yellowIcon;
+          else (data[row].accessibility_rating == 1)
+            icon=redIcon;
+            */
+            icon=yellowIcon;
+          L.marker ([data[row].latitude, data[row].longitude], {icon: icon}).addTo(map).bindPopup("<b>" + metadata + "</b>").openPopup();
+      }})
     </script>
   </body>
 </html>
