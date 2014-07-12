@@ -16,10 +16,10 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     
     
-    <!-- Include geolocation code -->
-    <script src="../ui/bootstrap/js/geolocation.js"></script>
+   
     <!--Include Leaflet.js -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    
    
     
     <style>
@@ -30,7 +30,7 @@
       
       /* Ensure Leaflet map has a defined height */
       #map {
-      	      height: 80%;
+      	      height: 720px;
       }
       
     </style>
@@ -91,15 +91,9 @@
     <div class="container">
 
       <h1>Getting user's location</h1>
-     
-      
-  
-        <article>
-        <p>Loading your location... </p>
-        </article>
         
          <div id="map">
-         
+         Map loading...
          
          
          </div>
@@ -151,19 +145,15 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    
+    <!-- Include Leaflet.js overlays -->
+    <script src="overlays.js"></script>
+    <!-- overlays have to be included after the DIV element is declared -->
+    
+    
     <script src="../ui/bootstrap/js/jquery.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-transition.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-alert.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-modal.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-dropdown.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-scrollspy.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-tab.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-tooltip.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-popover.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-button.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-collapse.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-carousel.js"></script>
-    <script src="../ui/bootstrap/js/bootstrap-typeahead.js"></script>
+    <script src="../ui/bootstrap/js/bootstrap.js"></script>
+
     
     
 
