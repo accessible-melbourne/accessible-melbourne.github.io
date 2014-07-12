@@ -2299,7 +2299,7 @@ legend {
   border-bottom: 1px solid transparent;
 }
 label {
-  display: inline-block;
+  display: inline;
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: bold;
@@ -4429,11 +4429,12 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: #ffffff;
-  text-align: center;
+  text-align: right;
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: .25em;
+  color: purple;
+  font-size: 400%;
 }
 a.label:hover,
 a.label:focus {
