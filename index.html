@@ -1,154 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="utf-8">
     <title>Accessible Melbourne</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="utf-8" />
 
-    <!-- Here we are using vanilla bootstrap replaced with the BootSwatch Readable theme, and the Paypal accessibility plugin -->
-    <link href="ui/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="ui/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="ui/bootstrap/css/bootstrap-accessibility.css" rel="stylesheet">
-    
-    <!-- Include Leaflet.js Stylesheet -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <!--Include Leaflet.js -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    
-   
-    
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="js/l.control.geosearch.js"></script>
+    <script src="js/l.geosearch.provider.openstreetmap.js"></script>
+    <link rel="stylesheet" href="css/l.geosearch.css" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="css/local.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+
+      // Mapbox attribution for corner of page
+      var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      // Mapbox map tile template
+      mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
+
+      // Tile layers
+      var grayscale   = L.tileLayer(mbUrl, {id: 'examples.map-20v6611k', attribution: mbAttr}),
+        streets  = L.tileLayer(mbUrl, {id: 'examples.map-i86knfo3',   attribution: mbAttr});
+
+      // Map initialization, with 'streets' as the default tile layer.
+      var map = L.map('map', {layers: [streets]});
+
+      // Popup initialization
+      var popup = L.popup();
+
+      // Initialise points arrays
+      var toilets=[], buildings=[];
+
+      // Types of base maps available in UI
+      var baseMaps = {
+          "Greyscale": grayscale,
+          "Streets": streets
+      };
+
+      function onLocationFound(e) {
+        var radius = e.accuracy / 2;
+        L.marker(e.latlng).addTo(map).bindPopup("You are within " + radius + " meters from this point").openPopup();
+        L.circle(e.latlng, radius).addTo(map);
+      }
+      function onLocationError(e) {
+        alert(e.message);
       }
 
-      
-    </style>
-    
+      map.on('locationfound', onLocationFound);
+      map.on('locationerror', onLocationError);
 
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="ui/bootstrap/js/html5shiv.js"></script>
-    <![endif]-->
+      map.locate({setView: true, maxZoom: 16});
 
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ui/bootstrapico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ui/bootstrapico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ui/bootstrapico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="ui/bootstrapico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="ui/bootstrapico/favicon.png">
-  </head>
+      function onMapClick(e) {
+        popup
+          .setLatLng(e.latlng)
+          .setContent("You clicked the map at " + e.latlng.toString())
+          .openOn(map);
+      }
 
-  <body>
+      map.on('click', onMapClick);
+
+      // Retrieve building data from API
+      function addBuildings(callback){
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27KENSINGTON%27', function(data) {
+
+          var LeafIcon = L.Icon.extend({
+            options: {
+                       iconAnchor:   [0, 0],
+                       popupAnchor:  [0, 0]
+                     }
+          });
+
+          // Different coloured icons
+          var greenIcon = new LeafIcon({iconUrl: 'img/marker-icon-green.png'}),
+          redIcon = new LeafIcon({iconUrl: 'img/marker-icon-red.png'}),
+          yellowIcon = new LeafIcon({iconUrl: 'img/marker-icon-yellow.png'});
+
+          var icon, row;
+
+          for (row in data) {
+            var metadata = "";
+            // If this building has a name, prepend it to the description
+            if (data[row].building_name)
+            { metadata += "Building name: " + data[row].building_name + "<br>"; }
+            // Other building fields
+            metadata += "<br>" + "Street address: " + data[row].street_address + "</br>";
+            metadata += "<br>" + "Accessibility type: " + data[row].accessibility_type + "</br>";
+            metadata += "<br>" + "Accessibility rating: " + data[row].accessibility_rating + "</br>";
+
+            // Based on building's accessibility, choose suitable icon colour
+            if (data[row].accessibility_rating == 3)
+              icon=greenIcon;
+            else if (data[row].accessibility_rating == 2)
+              icon=yellowIcon;
+            else if (data[row].accessibility_rating == 1)
+              icon=redIcon;
+            /* We use callback here because $.getJSON is asynchronous,
+             * and this is the only way we can get the data out to the
+             * rest of the script.
+             * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
+             */
+            callback(L.marker ([data[row].latitude, data[row].longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+        }});
+      }
+
+      // Retrieve toilet data from API
+      function addToilets(callback){
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data) {
+          var row;
+          for (row in data) {
+            /* We use callback here because $.getJSON is asynchronous,
+             * and this is the only way we can get the data out to the
+             * rest of the script.
+             * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
+             */
+            callback(L.marker(
+              [
+              data[row].geom.latitude,
+              data[row].geom.longitude
+              ]).bindPopup(
+                "<b>" + data[row].featurenam + "</b>"));
+          }});
+        }
 
 
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-      
-        <div class="navbar-header">
-          <a href="/index.html" class="navbar-brand">Accessible Melbourne</a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-        
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-        
-            <li>
-              <a href="/about.html">About</a>
-            </li>
-            <li>
-              <a href="/team.html">Team</a>
-            </li>
-            <li>
-              <a href="/todo.html">Todo list</a>
-            </li>
- 
- 
-          </ul>
+      /* Call addBuildings and addToilets, and push their results onto
+       * their respective arrays.
+       * NOTE: We pass an anonymous function because of the asynchronous
+       * nature of the getJSON function. */
+      addBuildings( function(point) {
+        buildings.push(point);
+      });
+      addToilets( function(point) {
+        toilets.push(point);
+      });
 
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://govhack.org">GovHack Home</a></li>
-            <li><a href="https://data.melbourne.vic.gov.au/">City of Melbourne Open Data Platform</a></li>
-          </ul>
 
-        </div>
-        
-      </div>
-    </div>
-    
-    
+      /* FIXME: At this point, we need to find a way to wait for both
+       * getJSON requests to complete, otherwise, the map will be passed
+       * the points.* arrays before they are fully populated.
+       * Links with potential useful info on this:
+       *
+       * https://stackoverflow.com/questions/11726315/getting-data-after-jquery-getjson
+       * https://stackoverflow.com/questions/10775787/function-wait-with-return-until-getjson-is-finished
+       */
 
-    <div class="container">
+      // Layer groups (containing points) available for display on the map
+      var overlayMaps = {
+          "Toilets": L.layerGroup(toilets),
+          "Buildings": L.layerGroup(buildings)
+      };
 
-      <h1>Welcome to Accessible Melbourne</h1>
-        
-      <p class="lead"> </p>
-      
-      <p>Info in here and links to maps go in here</p>
-        
-        
-        
-        
-        
-        
-
-         
-
-    </div> <!-- /container -->
-    
-    
-    
-    <footer>
-      	<div class="navbar navbar-default"> 
-      <div class="container">
-        <div class="navbar-header">
-          <a href="http://creativecommons.org/licenses/by-sa/3.0/au" class="navbar-brand">Proudly licensed under Creative Commons 3.0 Attribution Share-Alike CC-BY-SA</a>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar-footer">
-          <ul class="nav navbar-nav">
-
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-              <a href="https://twitter.com/search?q=%23govhack">#govhack on the Twitters</a>
-            </li>
-          </ul>
-          </div>
-        </div>
-      </div>
-    
-     </footer>
-    
-    
-    
-    
-
-    <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    
-    <script src="ui/bootstrap/js/jquery.js"></script>
-    <script src="ui/bootstrap/js/bootstrap.js"></script>
-    
-    
-    <!-- Include Leaflet.js overlays -->
-    <script src="overlays.js"></script>
-    <!-- overlays have to be included after the DIV element is declared -->
-    
-    
-    
-
-    
-    
-
+      // Add the baseMaps and overLapy maps to the map object
+      L.control.layers(baseMaps, overlayMaps).addTo(map);
+      new L.Control.GeoSearch({
+              provider: new L.GeoSearch.Provider.OpenStreetMap(),
+              position: 'topcenter',
+              showMarker: true
+              }).addTo(map);
+    </script>
   </body>
 </html>
-
-
