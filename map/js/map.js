@@ -47,7 +47,7 @@ function onMapClick(e) {
 map.on('click', onMapClick);
 
 // Retrieve building data from API
-$.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27KENSINGTON%27', function(data)
+$.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27MELBOURNE%27', function(data)
     {
       var buildings= { low: [], medium: [], high: [] };
 
