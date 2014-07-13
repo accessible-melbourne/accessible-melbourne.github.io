@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Leaflet Quick Start Guide Example</title>
+    <title>Accessible Melbourne</title>
     <meta charset="utf-8" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="js/l.control.geosearch.js"></script>
+    <script src="js/l.geosearch.provider.openstreetmap.js"></script>
+    <link rel="stylesheet" href="css/l.geosearch.css" />
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link rel="stylesheet" href="local.css" />
+    <link rel="stylesheet" href="css/local.css" />
   </head>
   <body>
     <div id="map"></div>
 
     <script>
-
       // Mapbox attribution for corner of page
       var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
       '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -113,36 +115,40 @@
           }
         });
 
-      // Retrieve toilet data from API
-      $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data)
-      {
-        var toilets=[];
-        data.forEach(function(row)
+        // Retrieve toilet data from API
+        $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data)
         {
-          /* We use callback here because $.getJSON is asynchronous,
-          * and this is the only way we can get the data out to the
-          * rest of the script.
-          * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
-          */
-          toilets.push(L.marker(
-          [
-          row.geom.latitude,
-          row.geom.longitude
-          ]).bindPopup(
-          "<b>" + row.featurenam + "</b>"));
+          var toilets=[];
+          data.forEach(function(row)
+          {
+            /* We use callback here because $.getJSON is asynchronous,
+            * and this is the only way we can get the data out to the
+            * rest of the script.
+            * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
+            */
+            toilets.push(L.marker(
+            [
+            row.geom.latitude,
+            row.geom.longitude
+            ]).bindPopup(
+            "<b>" + row.featurenam + "</b>"));
+          });
+
+          overlayMaps = {
+            "Toilets": L.layerGroup(toilets),
+            "Buildings (Low Accessibility": L.layerGroup(buildings.low),
+            "Buildings (Medium Accessibility)": L.layerGroup(buildings.medium),
+            "Buildings (High Accessibility)": L.layerGroup(buildings.high),
+          }
+          L.control.layers(baseMaps, overlayMaps).addTo(map);
         });
-
-        overlayMaps = {
-          "Toilets": L.layerGroup(toilets),
-          "Buildings (Low Accessibility": L.layerGroup(buildings.low),
-          "Buildings (Medium Accessibility)": L.layerGroup(buildings.medium),
-          "Buildings (High Accessibility)": L.layerGroup(buildings.high),
-        }
-        L.control.layers(baseMaps, overlayMaps).addTo(map);
       });
 
-      });
-
+      new L.Control.GeoSearch({
+        provider: new L.GeoSearch.Provider.OpenStreetMap(),
+        position: 'topcenter',
+        showMarker: true
+      }).addTo(map);
     </script>
   </body>
 </html>
