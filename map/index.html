@@ -64,11 +64,14 @@
       map.on('click', onMapClick);
 
       // Retrieve building data from API
-      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27KENSINGTON%27', function(data) {
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27KENSINGTON%27', function(data)
+      {
         var buildings=[];
 
-        var LeafIcon = L.Icon.extend({
-          options: {
+        var LeafIcon = L.Icon.extend(
+        {
+          options:
+          {
             iconAnchor:   [0, 0],
             popupAnchor:  [0, 0]
           }
@@ -81,7 +84,8 @@
 
         var icon, row;
 
-        data.forEach(function(row) {
+        data.forEach(function(row)
+        {
           var metadata = "";
           // If this building has a name, prepend it to the description
           if (row.building_name)
@@ -109,9 +113,11 @@
       });
 
       // Retrieve toilet data from API
-      $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data) {
+      $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data)
+      {
         var toilets=[];
-        data.forEach(function(row) {
+        data.forEach(function(row)
+        {
           /* We use callback here because $.getJSON is asynchronous,
           * and this is the only way we can get the data out to the
           * rest of the script.
