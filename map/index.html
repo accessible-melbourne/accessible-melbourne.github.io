@@ -33,7 +33,7 @@
       var popup = L.popup();
 
       // Initialise points arrays
-      var toilets=[], buildings=[];
+      var buildings=[];
 
       // Types of base maps available in UI
       var baseMaps = {
@@ -109,23 +109,24 @@
       }
 
       // Retrieve toilet data from API
-      function addToilets(callback){
       $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data) {
-          var row;
-          for (row in data) {
-            /* We use callback here because $.getJSON is asynchronous,
-             * and this is the only way we can get the data out to the
-             * rest of the script.
-             * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
-             */
-            callback(L.marker(
-              [
-              data[row].geom.latitude,
-              data[row].geom.longitude
-              ]).bindPopup(
-                "<b>" + data[row].featurenam + "</b>"));
-          }});
-        }
+        var toilets=[];
+        data.forEach(function(row) {
+          /* We use callback here because $.getJSON is asynchronous,
+          * and this is the only way we can get the data out to the
+          * rest of the script.
+          * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
+          */
+          toilets.push(L.marker(
+          [
+          row.geom.latitude,
+          row.geom.longitude
+          ]).bindPopup(
+          "<b>" + row.featurenam + "</b>"));
+        });
+        L.control.layers(baseMaps, {"Toilets": L.layerGroup(toilets)}).addTo(map);
+
+      });
 
 
       /* Call addBuildings and addToilets, and push their results onto
@@ -134,9 +135,6 @@
        * nature of the getJSON function. */
       addBuildings( function(point) {
         buildings.push(point);
-      });
-      addToilets( function(point) {
-        toilets.push(point);
       });
 
 
@@ -151,12 +149,8 @@
 
       // Layer groups (containing points) available for display on the map
       var overlayMaps = {
-          "Toilets": L.layerGroup(toilets),
           "Buildings": L.layerGroup(buildings)
       };
-
-      // Add the baseMaps and overLapy maps to the map object
-      L.control.layers(baseMaps, overlayMaps).addTo(map);
 
     </script>
   </body>
