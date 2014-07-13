@@ -7,8 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src="js/l.control.geosearch.js"></script>
+    <script src="js/l.geosearch.provider.openstreetmap.js"></script>
+    <link rel="stylesheet" href="css/l.geosearch.css" />
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <link rel="stylesheet" href="local.css" />
+    <link rel="stylesheet" href="css/local.css" />
   </head>
   <body>
     <div id="map"></div>
@@ -157,7 +160,11 @@
 
       // Add the baseMaps and overLapy maps to the map object
       L.control.layers(baseMaps, overlayMaps).addTo(map);
-
+      new L.Control.GeoSearch({
+              provider: new L.GeoSearch.Provider.OpenStreetMap(),
+              position: 'topcenter',
+              showMarker: true
+              }).addTo(map);
     </script>
   </body>
 </html>
