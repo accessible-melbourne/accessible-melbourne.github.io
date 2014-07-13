@@ -66,7 +66,7 @@
       // Retrieve building data from API
       $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27KENSINGTON%27', function(data)
       {
-        var buildings=[];
+        var buildings= { low: [], medium: [], high: [] };
 
         var LeafIcon = L.Icon.extend(
         {
@@ -97,20 +97,21 @@
 
           // Based on building's accessibility, choose suitable icon colour
           if (row.accessibility_rating == 3)
-          icon=greenIcon;
+          {
+            icon=greenIcon;
+            buildings.high.push(L.marker ([row.latitude, row.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+          }
           else if (row.accessibility_rating == 2)
-          icon=yellowIcon;
+          {
+            icon=yellowIcon;
+            buildings.medium.push(L.marker ([row.latitude, row.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+          }
           else if (row.accessibility_rating == 1)
-          icon=redIcon;
-          /* We use callback here because $.getJSON is asynchronous,
-          * and this is the only way we can get the data out to the
-          * rest of the script.
-          * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
-          */
-          buildings.push(L.marker ([row.latitude, row.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+          {
+            icon=redIcon;
+            buildings.low.push(L.marker ([row.latitude, row.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+          }
         });
-        L.control.layers(baseMaps, {"Buildings": L.layerGroup(buildings)}).addTo(map);
-      });
 
       // Retrieve toilet data from API
       $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data)
@@ -130,19 +131,17 @@
           ]).bindPopup(
           "<b>" + row.featurenam + "</b>"));
         });
-        L.control.layers(baseMaps, {"Toilets": L.layerGroup(toilets)}).addTo(map);
 
+        overlayMaps = {
+          "Toilets": L.layerGroup(toilets),
+          "Buildings (Low Accessibility": L.layerGroup(buildings.low),
+          "Buildings (Medium Accessibility)": L.layerGroup(buildings.medium),
+          "Buildings (High Accessibility)": L.layerGroup(buildings.high),
+        }
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
       });
 
-
-      /* FIXME: At this point, we need to find a way to wait for both
-      * getJSON requests to complete, otherwise, the map will be passed
-      * the points.* arrays before they are fully populated.
-      * Links with potential useful info on this:
-      *
-      * https://stackoverflow.com/questions/11726315/getting-data-after-jquery-getjson
-      * https://stackoverflow.com/questions/10775787/function-wait-with-return-until-getjson-is-finished
-      */
+      });
 
     </script>
   </body>
