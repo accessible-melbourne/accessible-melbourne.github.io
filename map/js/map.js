@@ -61,9 +61,9 @@ $.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=acces
         });
 
       // Different coloured icons
-      var greenIcon = new LeafIcon({iconUrl: 'img/marker-colour-green-triangle.png'}),
-  redIcon = new LeafIcon({iconUrl: 'img/marker-colour-red-oval.png'}),
-  yellowIcon = new LeafIcon({iconUrl: 'img/marker-colour-blue-rectangle.png'}),
+      var greenIcon = new LeafIcon({iconUrl: 'img/marker-colour-green-triangle-number.png'}),
+  redIcon = new LeafIcon({iconUrl: 'img/marker-colour-red-oval-number.png'}),
+  yellowIcon = new LeafIcon({iconUrl: 'img/marker-colour-blue-rectangle-number.png'}),
   blueIcon = new LeafIcon({iconUrl: 'img/marker-icon.png'});
 
 var icon, row;
