@@ -80,9 +80,10 @@
         });
 
         // Different coloured icons
-        var greenIcon = new LeafIcon({iconUrl: 'img/marker-icon-green.png'}),
-        redIcon = new LeafIcon({iconUrl: 'img/marker-icon-red.png'}),
-        yellowIcon = new LeafIcon({iconUrl: 'img/marker-icon-yellow.png'});
+        var greenIcon = new LeafIcon({iconUrl: 'img/marker-colour-green-triangle.png'}),
+        redIcon = new LeafIcon({iconUrl: 'img/marker-colour-red-oval.png'}),
+        yellowIcon = new LeafIcon({iconUrl: 'img/marker-colour-blue-rectangle.png'}),
+        blueIcon = new LeafIcon({iconUrl: 'img/marker-icon.png'});
 
         var icon, row;
 
@@ -125,7 +126,7 @@
             [
             row.geom.latitude,
             row.geom.longitude
-            ]).bindPopup(
+            ], {icon: blueIcon}).bindPopup(
             "<b>" + row.featurenam + "</b>"));
           });
 
