@@ -47,7 +47,7 @@ function onMapClick(e) {
 map.on('click', onMapClick);
 
 // Retrieve building data from API
-$.getJSON('http://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27MELBOURNE%27', function(data)
+$.getJSON('https://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27MELBOURNE%27', function(data)
     {
       var buildings= { low: [], medium: [], high: [] };
 
@@ -98,7 +98,7 @@ else if (row.accessibility_rating == 1)
 });
 
 // Retrieve toilet data from API
-$.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data)
+$.getJSON('https://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data)
     {
       var toilets=[];
       data.forEach(function(row)
