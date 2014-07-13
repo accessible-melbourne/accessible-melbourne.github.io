@@ -121,11 +121,6 @@
           var toilets=[];
           data.forEach(function(row)
           {
-            /* We use callback here because $.getJSON is asynchronous,
-            * and this is the only way we can get the data out to the
-            * rest of the script.
-            * Ref: https://stackoverflow.com/questions/20913682/access-json-data-outside-of-getjson
-            */
             toilets.push(L.marker(
             [
             row.geom.latitude,
