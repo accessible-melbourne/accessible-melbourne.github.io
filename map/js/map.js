@@ -117,7 +117,7 @@ $.getJSON('http://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y',
   "Buildings (Medium Accessibility)": L.layerGroup(buildings.medium),
   "Buildings (High Accessibility)": L.layerGroup(buildings.high),
       }
-      L.control.layers(baseMaps, overlayMaps).addTo(map);
+      L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
     });
 });
 
