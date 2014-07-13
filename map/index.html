@@ -17,14 +17,14 @@
 
       // Mapbox attribution for corner of page
       var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-        'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      'Imagery © <a href="http://mapbox.com">Mapbox</a>',
       // Mapbox map tile template
       mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
 
       // Tile layers
       var grayscale   = L.tileLayer(mbUrl, {id: 'examples.map-20v6611k', attribution: mbAttr}),
-        streets  = L.tileLayer(mbUrl, {id: 'examples.map-i86knfo3',   attribution: mbAttr});
+      streets  = L.tileLayer(mbUrl, {id: 'examples.map-i86knfo3',   attribution: mbAttr});
 
       // Map initialization, with 'streets' as the default tile layer.
       var map = L.map('map', {layers: [streets]});
@@ -36,8 +36,8 @@
 
       // Types of base maps available in UI
       var baseMaps = {
-          "Greyscale": grayscale,
-          "Streets": streets
+        "Greyscale": grayscale,
+        "Streets": streets
       };
 
       function onLocationFound(e) {
@@ -56,9 +56,9 @@
 
       function onMapClick(e) {
         popup
-          .setLatLng(e.latlng)
-          .setContent("You clicked the map at " + e.latlng.toString())
-          .openOn(map);
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(map);
       }
 
       map.on('click', onMapClick);
@@ -130,13 +130,13 @@
 
 
       /* FIXME: At this point, we need to find a way to wait for both
-       * getJSON requests to complete, otherwise, the map will be passed
-       * the points.* arrays before they are fully populated.
-       * Links with potential useful info on this:
-       *
-       * https://stackoverflow.com/questions/11726315/getting-data-after-jquery-getjson
-       * https://stackoverflow.com/questions/10775787/function-wait-with-return-until-getjson-is-finished
-       */
+      * getJSON requests to complete, otherwise, the map will be passed
+      * the points.* arrays before they are fully populated.
+      * Links with potential useful info on this:
+      *
+      * https://stackoverflow.com/questions/11726315/getting-data-after-jquery-getjson
+      * https://stackoverflow.com/questions/10775787/function-wait-with-return-until-getjson-is-finished
+      */
 
     </script>
   </body>
