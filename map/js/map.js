@@ -4,13 +4,14 @@ var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</
 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 // Mapbox map tile template
 mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
-
+steveUrl = 'http://rm1.researchmaps.net:5500/v2/{id}/{z}/{x}/{y}.png'
 // Tile layers
 var grayscale   = L.tileLayer(mbUrl, {id: 'examples.map-20v6611k', attribution: mbAttr}),
-    streets  = L.tileLayer(mbUrl, {id: 'examples.map-i86knfo3',   attribution: mbAttr});
+    streets  = L.tileLayer(mbUrl, {id: 'examples.map-i86knfo3',   attribution: mbAttr}),
+    footpathgradients = L.tileLayer(steveUrl, {id: 'gradients_360e17',   attribution: 'City of Melbourne, Steve Bennett'});
 
 // Map initialization, with 'streets' as the default tile layer.
-var map = L.map('map', {layers: [streets]});
+var map = L.map('map', {layers: [streets, footpathgradients]});
 
 // Popup initialization
 var popup = L.popup();
@@ -116,6 +117,7 @@ $.getJSON('https://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y'
   "Buildings (Low Accessibility": L.layerGroup(buildings.low),
   "Buildings (Medium Accessibility)": L.layerGroup(buildings.medium),
   "Buildings (High Accessibility)": L.layerGroup(buildings.high),
+        "Footpath gradients": footpathgradients
       }
       L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
     });
