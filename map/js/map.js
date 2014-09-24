@@ -5,9 +5,9 @@ var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</
 // Mapbox map tile template
 mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
 steveUrl = 'http://en5.cycletour.org/tile/{id}/{z}/{x}/{y}.png';
-// Tile layers
+// Tile layers 
 var grayscale   = L.tileLayer(mbUrl, {id: 'examples.map-20v6611k', attribution: mbAttr}),
-    streets  = L.tileLayer(mbUrl, {id: 'examples.map-i86knfo3',   attribution: mbAttr}),
+    streets  = L.tileLayer(mbUrl, {id: 'examples.map-i875mjb7',   attribution: mbAttr}),
     footpathgradients = L.tileLayer(steveUrl, {id: 'gradients',   attribution: 'City of Melbourne, Steve Bennett'});
 
 
