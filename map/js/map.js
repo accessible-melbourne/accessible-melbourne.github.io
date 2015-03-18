@@ -4,7 +4,7 @@ var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</
 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 // Mapbox map tile template
 mbUrl = 'https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png';
-steveUrl = 'http://en5.cycletour.org/tile/{id}/{z}/{x}/{y}.png';
+steveUrl = 'http://guru.cycletour.org/tile/{id}/{z}/{x}/{y}.png';
 // Tile layers 
 var grayscale   = L.tileLayer(mbUrl, {id: 'examples.map-20v6611k', attribution: mbAttr}),
     streets  = L.tileLayer(mbUrl, {id: 'examples.map-i875mjb7',   attribution: mbAttr}),
