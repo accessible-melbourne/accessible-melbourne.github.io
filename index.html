@@ -1,122 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Accessible Melbourne</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <!-- Here we are using vanilla bootstrap replaced with the BootSwatch Readable theme, and the Paypal accessibility plugin -->
-    <link href="ui/bootstrap/css/bootstrap.css" rel="stylesheet">
-    <link href="ui/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
-    <link href="ui/bootstrap/css/bootstrap-accessibility.css" rel="stylesheet">
-    <link href="map/css/l.geosearch.css" rel="stylesheet" />
+<head>
+  <meta charset="utf-8">
+  <title>Accessible Melbourne</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Here we are using vanilla bootstrap replaced with the BootSwatch Readable theme, and the Paypal accessibility plugin -->
+  <link href="ui/bootstrap/css/bootstrap.css" rel="stylesheet">
+  <link href="ui/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="ui/bootstrap/css/bootstrap-accessibility.css" rel="stylesheet">
+  <link href="map/css/l.geosearch.css" rel="stylesheet" />
+  <!-- Include Leaflet.js Stylesheet -->
+  <link rel="stylesheet" href="map/css/leaflet.css" />
+  <!--Include Leaflet.js -->
+  <script src="map/js/leaflet.js"></script>
+  <script src="map/js/l.control.geosearch.js"></script>
+  <script src="map/js/l.geosearch.provider.openstreetmap.js"></script>
+  <style>
+    body {
+      padding-top: 60px;
+      /* 60px to make the container go all the way to the bottom of the topbar */
+    }
+    /* Ensure Leaflet map has a defined height */
 
-    <!-- Include Leaflet.js Stylesheet -->
-    <link rel="stylesheet" href="map/css/leaflet.css" />
-
-
-
-    <!--Include Leaflet.js -->
-    <script src="map/js/leaflet.js"></script>
-    <script src="map/js/l.control.geosearch.js"></script>
-    <script src="map/js/l.geosearch.provider.openstreetmap.js"></script>
-
-
-
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-
-
-      /* Ensure Leaflet map has a defined height */
-      #map {
-        height: 720px;
-      }
-
-    </style>
-
-
-    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
+    #map {
+      height: 720px;
+    }
+  </style>
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
     <script src="../ui/bootstrap/js/html5shiv.js"></script>
     <![endif]-->
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ui/bootstrapico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ui/bootstrapico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ui/bootstrapico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="ui/bootstrapico/apple-touch-icon-57-precomposed.png">
+  <link rel="shortcut icon" href="ui/bootstrapico/favicon.png">
+</head>
 
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ui/bootstrapico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ui/bootstrapico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ui/bootstrapico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="ui/bootstrapico/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="ui/bootstrapico/favicon.png">
-  </head>
-
-  <body>
-
-
-    <div class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-
-        <div class="navbar-header">
-          <a href="ui" class="navbar-brand">Accessible Melbourne</a>
-          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        </div>
-
-        <div class="navbar-collapse collapse" id="navbar-main">
-          <ul class="nav navbar-nav">
-
-            <li>
-              <a href="./about.html">About</a>
-            </li>
-            <li>
-              <a href="./team.html">Team</a>
-            </li>
-            <li>
-              <a href="./todo.html">Todo list</a>
-            </li>
-
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="http://govhack.org">GovHack Home</a></li>
-            <li><a href="https://data.melbourne.vic.gov.au/">City of Melbourne Open Data Platform</a></li>
-          </ul>
-
-        </div>
-
+<body>
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="ui" class="navbar-brand">Accessible Melbourne</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="./about.html">About</a>
+          </li>
+          <li>
+            <a href="./team.html">Team</a>
+          </li>
+          <li>
+            <a href="./todo.html">Todo list</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="http://govhack.org">GovHack Home</a></li>
+          <li><a href="https://data.melbourne.vic.gov.au/">City of Melbourne Open Data Platform</a></li>
+        </ul>
       </div>
     </div>
-
-
-
-    <div class="container">
-
-      <h1>Getting user's location</h1>
-
-      <div id="map">
-        Map loading...
-
-
-      </div>
-
-
-
-
-
-
-
-
-
-    </div> <!-- /container -->
-
-
-
-    <footer>
+  </div>
+  <div class="container">
+    <h1>Getting user's location</h1>
+    <div id="map">
+      Map loading...
+    </div>
+  </div>
+  <!-- /container -->
+  <footer>
     <div class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
@@ -124,16 +86,13 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-footer">
           <ul class="nav navbar-nav">
-
             <li>
-            <a href="#">Link 1</a>
+              <a href="#">Link 1</a>
             </li>
             <li>
-            <a href="#">Link 2</a>
+              <a href="#">Link 2</a>
             </li>
-
           </ul>
-
           <ul class="nav navbar-nav navbar-right">
             <li>
               <a href="https://twitter.com/search?q=%23govhack">#govhack on the Twitters</a>
@@ -142,30 +101,15 @@
         </div>
       </div>
     </div>
-
-    </footer>
-
-
-
-
-
-    <!-- Le javascript
+  </footer>
+  <!-- Le javascript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="ui/bootstrap/js/jquery.js"></script>
+  <script src="ui/bootstrap/js/bootstrap.js"></script>
+  <!-- Include Leaflet.js overlays -->
+  <script src="map/js/map.js"></script>
+  <!-- overlays have to be included after the DIV element is declared -->
+</body>
 
-    <script src="ui/bootstrap/js/jquery.js"></script>
-    <script src="ui/bootstrap/js/bootstrap.js"></script>
-
-
-    <!-- Include Leaflet.js overlays -->
-    <script src="map/js/map.js"></script>
-    <!-- overlays have to be included after the DIV element is declared -->
-
-
-
-
-
-
-
-  </body>
 </html>
