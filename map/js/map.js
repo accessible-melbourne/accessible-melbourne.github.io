@@ -3,17 +3,17 @@ var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</
 '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
 'Imagery © <a href="http://mapbox.com">Mapbox</a>',
 // Mapbox map tile template
-mbUrl = 'https://api.mapbox.com/v4/cjbayliss.01238090/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiY2piYXlsaXNzIiwiYSI6ImNpamliYXEyNzAydnp0dG01cXhnbHVyOHIifQ.OMisxdsBEpQZPxx_c_hZsQ';
-steveUrl = 'http://guru.cycletour.org/tile/{id}/{z}/{x}/{y}.png';
+//mbUrl = 'https://api.mapbox.com/v4/cjbayliss.01238090/{z}/{x}/{y}@2x.png?access_token=pk.eyJ1IjoiY2piYXlsaXNzIiwiYSI6ImNpamliYXEyNzAydnp0dG01cXhnbHVyOHIifQ.OMisxdsBEpQZPxx_c_hZsQ';
+mbUrl = 'https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWF0dGNlbiIsImEiOiJtQk5qQ3FrIn0.KXjMKddh4Gb0zqLqKlPo9g'
+//steveUrl = 'http://guru.cycletour.org/tile/{id}/{z}/{x}/{y}.png';
 // Tile layers
-var grayscale   = L.tileLayer(mbUrl, {id: 'examples.map-20v6611k', attribution: mbAttr}),
-    streets  = L.tileLayer(mbUrl, {id: 'examples.map-i875mjb7',   attribution: mbAttr}),
-    footpathgradients = L.tileLayer(steveUrl, {id: 'gradients',   attribution: 'City of Melbourne, Steve Bennett'});
+var grayscale   = L.tileLayer(mbUrl, {id: 'light-v10', attribution: mbAttr}),
+    streets  = L.tileLayer(mbUrl, {id: 'streets-v11',   attribution: mbAttr});
 
 
 
 // Map initialization, with 'streets' as the default tile layer.
-var map = L.map('map', {layers: [streets, footpathgradients]});
+var map = L.map('map', {layers: [streets]});
 
 // Popup initialization
 var popup = L.popup();
@@ -50,7 +50,7 @@ function onMapClick(e) {
 map.on('click', onMapClick);
 
 // Retrieve building data from API
-$.getJSON('https://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating>0+AND+suburb=%27MELBOURNE%27', function(data)
+$.getJSON('https://data.melbourne.vic.gov.au/resource/pmhb-s6pn.json?$where=accessibility_rating%3E0+AND+suburb=%27Melbourne%20(CBD)%27', function(data)
     {
       var buildings= { low: [], medium: [], high: [] };
 
@@ -86,30 +86,30 @@ metadata += "<br>" + "Accessibility rating: " + row.accessibility_rating + "</br
 if (row.accessibility_rating == 3)
 {
   icon=greenIcon;
-  buildings.high.push(L.marker ([row.latitude, row.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+  buildings.high.push(L.marker ([row.location.latitude, row.location.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
 }
 else if (row.accessibility_rating == 2)
 {
   icon=yellowIcon;
-  buildings.medium.push(L.marker ([row.latitude, row.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+  buildings.medium.push(L.marker ([row.location.latitude, row.location.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
 }
 else if (row.accessibility_rating == 1)
 {
   icon=redIcon;
-  buildings.low.push(L.marker ([row.latitude, row.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
+  buildings.low.push(L.marker ([row.location.latitude, row.location.longitude], {icon: icon}).bindPopup("<b>" + metadata + "</b>"));
 }
 });
 
 // Retrieve toilet data from API
-$.getJSON('https://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y', function(data)
+$.getJSON('https://data.melbourne.vic.gov.au/resource/ru3z-44we.json?wheelchair=yes', function(data)
     {
       var toilets=[];
       data.forEach(function(row)
         {
           toilets.push(L.marker(
               [
-              row.geom.latitude,
-              row.geom.longitude
+              row.lat,
+              row.lon
               ], {icon: blueIcon}).bindPopup(
                 "<b>" + row.featurenam + "</b>"));
         });
@@ -118,8 +118,7 @@ $.getJSON('https://data.melbourne.vic.gov.au/resource/twe5-xv8t.json?disabled=Y'
         "Toilets": L.layerGroup(toilets),
   "Buildings (Low Accessibility": L.layerGroup(buildings.low),
   "Buildings (Medium Accessibility)": L.layerGroup(buildings.medium),
-  "Buildings (High Accessibility)": L.layerGroup(buildings.high),
-        "Footpath gradients": footpathgradients
+  "Buildings (High Accessibility)": L.layerGroup(buildings.high)
       }
       L.control.layers(baseMaps, overlayMaps, { collapsed: false }).addTo(map);
     });
